@@ -1,79 +1,516 @@
+MINIPROYECTO 1
 SIMULADOR DE CAMBIO DE CONTEXTO EN PYTHON
+CTX / Cambio de contexto
+Planificación Round Robin
 
-REQUISITOS
+
+1. INTEGRANTES DEL EQUIPO:
+
+1. DANDER LINARES CONSTANZA
+2. MOTTA REYES EMMANUEL ALBERTO
+3. NAVARRETE AGUIRRE XIMENA
+4. NUÑEZ LOPEZ ALEJANDRO JESUS
+
+
+2. OBJETIVO
+
+Simular el cambio de contexto entre varios procesos que compiten
+por una sola CPU, utilizando planificación por turnos Round Robin.
+
+El programa permite observar:
+- El orden de ejecución de los procesos.
+- El estado de cada proceso.
+- El guardado y la restauración de su contexto.
+- La influencia del quantum en los turnos de ejecución.
+- Los tiempos de espera y de retorno.
+- La línea de tiempo y el registro de eventos.
+
+
+3. REQUISITOS
+
 - Python 3.8 o posterior.
-- Tkinter para abrir la ventana gráfica.
-- No requiere instalar paquetes con pip.
+  Se recomienda una versión de Python 3 con soporte vigente.
+- Tkinter para utilizar la interfaz gráfica.
+- Un entorno de escritorio para mostrar la ventana.
+- Todos los archivos del proyecto en la misma carpeta.
 
-ARCHIVOS
-main.py         Inicia el programa y procesa las opciones de ejecución.
-proceso.py      Define cada proceso y su contexto guardado (PC y ACC).
-planificador.py Administra Round Robin, la CPU, la cola y los cambios de estado.
-gui.py          Contiene la ventana, los controles, la tabla y la línea de tiempo.
-consola.py      Muestra los eventos y resultados en la terminal.
+No requiere instalar paquetes con pip.
+Tkinter se instala con Python o mediante el gestor de paquetes
+del sistema operativo.
 
-CÓMO EJECUTAR
-1. Extrae el ZIP completo.
-2. Mantén todos los archivos .py juntos dentro de simulador_contexto.
-3. Abre esa carpeta en VS Code: Archivo > Abrir carpeta.
-4. Abre Terminal > Nueva terminal. Debes estar en la carpeta que contiene main.py.
-5. Ejecuta SOLO main.py; este carga automáticamente los demás módulos.
 
-Ubuntu / Linux:
+4. ARCHIVOS DEL PROYECTO
+
+main.py
+Punto de entrada. Procesa los argumentos y abre la interfaz
+gráfica o inicia el modo consola.
+
+proceso.py
+Define los procesos y los datos de su contexto guardado.
+
+planificador.py
+Implementa Round Robin, administra la CPU y la cola de listos,
+ejecuta los ciclos y guarda o restaura el contexto.
+
+gui.py
+Contiene la interfaz gráfica, los botones, la tabla, las leyendas,
+la línea de tiempo y el registro de eventos.
+
+consola.py
+Presenta los eventos y los resultados en la terminal.
+-------------------------------------------------------------
+Para iniciar el proyecto se ejecuta main.py.
+No es necesario ejecutar los demás archivos por separado:
+main.py utiliza los módulos correspondientes.
+-------------------------------------------------------------
+
+5. INSTALACIÓN Y EJECUCIÓN EN LINUX
+
+IMPORTANTE:
+Linux tiene distintas distribuciones. El comando de instalación
+depende de la distribución y no es universal.
+
+5.1. Comprobar Python
+
+    python3 --version
+
+5.2. Instalar Python y Tkinter si faltan
+
+Ejecute únicamente los comandos de su distribución.
+
+Debian, Ubuntu, Linux Mint y distribuciones basadas en Debian:
+
+    sudo apt update
+    sudo apt install python3 python3-tk
+
+Fedora:
+
+    sudo dnf install python3 python3-tkinter
+
+Arch Linux y distribuciones compatibles con su gestor:
+
+    sudo pacman -S python tk
+
+En otras distribuciones, consulte los paquetes equivalentes de
+Python 3 y Tkinter en su gestor de paquetes.
+
+Estos paquetes corresponden al Python proporcionado por la
+distribución. Una instalación personalizada de Python puede
+necesitar su propia configuración de Tkinter.
+
+5.3. Comprobar Tkinter
+
+    python3 -m tkinter
+
+Debe abrirse una pequeña ventana de prueba.
+Ciérrela antes de continuar.
+
+5.4. Abrir el simulador
+
+Desde la carpeta del proyecto:
+
     python3 main.py
 
-Windows:
+Si su distribución utiliza el comando python para Python 3,
+puede sustituir python3 por python, comprobando antes la versión.
+
+Instalar Tkinter y ejecutar el proyecto son pasos distintos.
+El comando que inicia el programa es python3 main.py.
+
+
+6. INSTALACIÓN Y EJECUCIÓN EN WINDOWS
+
+6.1. Comprobar Python
+
+Abra PowerShell o una terminal y ejecute:
+
+    python --version
+
+Si no se reconoce, pruebe:
+
+    py --version
+
+Si ninguno funciona, instale Python 3 desde:
+
+    https://www.python.org/downloads/
+
+Utilice una instalación completa con soporte Tcl/Tk.
+Si el instalador ofrece las opciones "Add Python to PATH" y
+"Tcl/Tk and IDLE", actívelas.
+
+Después de instalar, cierre y vuelva a abrir la terminal.
+
+6.2. Comprobar Tkinter
+
+    python -m tkinter
+
+Si utiliza el comando py:
+
+    py -m tkinter
+
+Debe abrirse una ventana de prueba.
+
+Si falta Tkinter, modifique o repare la instalación de Python
+para incluir Tcl/Tk. No se soluciona con "pip install tkinter".
+
+6.3. Abrir el simulador
+
+Desde la carpeta del proyecto:
+
     python main.py
-Si el comando anterior no se reconoce y tienes Python instalado:
+
+O bien:
+
     py main.py
 
-Si Ubuntu indica que falta Tkinter:
-    sudo apt install python3-tk
-Después vuelve a ejecutar:
-    python3 main.py
+Utilice el mismo comando con el que comprobó Tkinter.
 
-MODO CONSOLA (no necesita Tkinter ni pantalla gráfica)
-Ubuntu / Linux:
+
+7. MODO CONSOLA
+
+Este modo no necesita Tkinter ni una pantalla gráfica.
+
+Linux:
+
     python3 main.py --consola
+
 Windows:
+
     python main.py --consola
 
-Para personalizar ráfagas y quantum en consola:
+Alternativa en Windows:
+
+    py main.py --consola
+
+Para indicar ráfagas y quantum:
+
+Linux:
+
     python3 main.py --consola --rafagas 5,3,4 --quantum 2
-En Windows sustituye python3 por python o py.
+
+Windows:
+
+    python main.py --consola --rafagas 5,3,4 --quantum 2
+
+También puede sustituir python por py en Windows.
+
 Las opciones --rafagas y --quantum se aplican al modo consola.
-En modo gráfico, configura estos valores dentro de la ventana.
+En modo gráfico, los valores se configuran dentro de la ventana.
 
-USO DE LA INTERFAZ
-- Ráfagas: escribe enteros positivos separados por comas (ejemplo: 5,3,4).
-- Quantum: número máximo de ciclos de cada turno; debe ser un entero positivo.
-- Aplicar / Reiniciar: carga la configuración y empieza desde cero.
-- Un paso: realiza un despacho, un ciclo de CPU o un guardado de contexto.
-- Automático: avanza sin pulsar manualmente cada paso.
-- Pausar: detiene el avance automático sin borrar la simulación.
-- Pausa visual (ms): cambia la velocidad de animación, no el quantum.
-- Exportar registro: permite guardar los eventos en un archivo de texto.
-- La interfaz admite hasta 20 procesos y 2000 ciclos en total.
 
-ESTADOS Y CONTEXTO
-Azul: LISTO. Verde: EJECUTANDO. Gris: TERMINADO.
-PC es el contador de programa y ACC es el registro acumulador.
-La CPU muestra los registros activos; la tabla muestra el último contexto
-que se guardó en el PCB del proceso. Al volver su turno, se restaura.
-Cada ciclo ejecuta ACC += PID y aumenta PC en uno.
-Todos los procesos llegan en t=0. No se simula E/S ni costo temporal por
-cambio de contexto. Es una simulación, no ejecuta procesos reales del SO.
+8. CONFIGURACIÓN DE LA SIMULACIÓN
 
-EJEMPLO PARA COMPROBAR
-Con ráfagas 5,3,4 y quantum 2:
-- Tiempo total: 12 ciclos.
-- Cambios entre procesos: 6.
-- Fin de P1: 12; fin de P2: 9; fin de P3: 11.
-El contador no incluye el despacho inicial ni volver al mismo proceso.
+RÁFAGAS
 
-SOLUCIÓN DE PROBLEMAS
-- "No such file" o "can't open file": abre la terminal en la carpeta de main.py.
-- "No module named planificador/proceso/gui/consola": extrae todos los .py juntos.
-- Error de pantalla/display: ejecuta en una sesión de escritorio o usa --consola.
-- No ejecutes directamente gui.py, proceso.py, planificador.py o consola.py:
-  el punto de entrada es main.py.
+Cada número representa los ciclos de CPU que necesita un proceso.
+
+Ejemplo:
+
+    5,3,4
+
+Crea estos procesos:
+- P1 necesita 5 ciclos.
+- P2 necesita 3 ciclos.
+- P3 necesita 4 ciclos.
+
+Los identificadores se asignan según el orden de entrada.
+Todos los procesos llegan en el instante t=0.
+
+Los valores deben ser enteros positivos, separados por comas.
+No se admiten ráfagas de cero, negativas ni decimales.
+
+LÍMITES DE LA INTERFAZ GRÁFICA
+
+- Desde 1 hasta 20 procesos.
+- Hasta 2000 ciclos en total, sumando todas las ráfagas.
+
+Estos límites son de la interfaz del proyecto, no del algoritmo
+Round Robin en general.
+
+QUANTUM
+
+Es el máximo número de ciclos que un proceso puede ejecutar
+durante un turno.
+
+Debe ser un entero positivo.
+
+Ejemplo:
+Un proceso necesita 5 ciclos y el quantum es 2.
+
+Primer turno: ejecuta 2 ciclos; le quedan 3.
+Segundo turno: ejecuta 2 ciclos; le queda 1.
+Tercer turno: ejecuta 1 ciclo y termina.
+
+Entre sus turnos, otros procesos pueden utilizar la CPU.
+
+Si un proceso termina antes de agotar el quantum, libera la CPU
+inmediatamente. No consume los ciclos sobrantes de ese turno.
+
+
+9. FUNCIONAMIENTO DE ROUND ROBIN
+
+1. Los procesos se colocan en una cola de listos.
+
+2. Se selecciona el primer proceso de la cola.
+
+3. Se restaura su contexto en la CPU.
+
+4. El proceso ejecuta hasta agotar su quantum o terminar su ráfaga.
+
+5. Se guarda su contexto.
+
+6. Si todavía tiene trabajo, vuelve al final de la cola.
+   Si terminó, pasa al estado TERMINADO y sale de la planificación.
+
+7. Se repite el procedimiento hasta completar todos los procesos.
+
+El tiempo de la simulación aumenta únicamente al ejecutar
+un ciclo de CPU.
+
+
+10. USO DE LA INTERFAZ
+
+APLICAR / REINICIAR
+Carga las ráfagas y el quantum escritos en los campos.
+Reinicia el tiempo, los procesos, las estadísticas y el registro.
+
+Después de modificar los valores, pulse este botón para aplicarlos.
+
+UN PASO
+Realiza la siguiente operación:
+- Despachar y restaurar un proceso.
+- Ejecutar un ciclo de CPU.
+- Guardar el contexto.
+
+Una pulsación no equivale necesariamente a un ciclo de CPU:
+el despacho y el guardado no aumentan el tiempo simulado.
+
+AUTOMÁTICO
+Avanza por las operaciones sin pulsar manualmente cada paso.
+Se detiene cuando todos los procesos terminan.
+
+PAUSAR
+Detiene el avance automático sin borrar los datos.
+Para continuar, pulse Automático o Un paso.
+
+RÁPIDO / LENTO
+Modifica la pausa visual entre operaciones.
+No cambia el quantum ni los resultados de la planificación.
+
+EXPORTAR
+Permite guardar el registro de la simulación en un archivo de texto.
+Para conservar una ejecución, expórtela antes de reiniciar.
+
+CPU, PC / ACC, RELOJ Y PRÓXIMA FASE
+Muestran el proceso activo, los registros actuales de la CPU,
+el tiempo simulado y la siguiente operación.
+
+COLA DE LISTOS
+Muestra los procesos que esperan turno, en su orden de atención.
+
+TABLA DE PROCESOS
+Muestra el estado, la ráfaga, el trabajo restante, el contexto
+guardado y los tiempos de cada proceso.
+
+LÍNEA DE TIEMPO
+Cada bloque representa un ciclo de CPU.
+La etiqueta indica qué proceso ejecutó ese ciclo.
+
+REGISTRO DE CONTEXTO
+Describe la restauración, ejecución y guardado de cada proceso.
+
+
+11. ESTADOS Y COLORES
+
+COLORES DE ESTADO EN LA TABLA
+
+Azul: LISTO.
+El proceso espera su turno para utilizar la CPU.
+
+Verde: EJECUTANDO.
+El proceso tiene asignada la CPU.
+
+Gris: TERMINADO.
+El proceso completó todos los ciclos de su ráfaga.
+
+COLORES DE LOS PROCESOS EN LA LÍNEA DE TIEMPO
+
+Identifican a cada proceso, no su estado.
+
+Por ejemplo:
+- P1: azul.
+- P2: verde.
+- P3: amarillo.
+- P4: violeta.
+- P5: rosa.
+- P6: cian.
+
+Consulte la leyenda de procesos para identificar cada color.
+
+Un bloque verde de P2 significa que ese ciclo pertenece a P2.
+No significa que P2 siga ejecutándose en el momento actual.
+
+
+12. CONTEXTO: PCB, PC Y ACC
+
+PCB:
+Bloque de Control del Proceso. Representa los datos que se
+conservan para poder reanudar un proceso.
+
+PC:
+Contador de programa. En esta simulación indica cuántas
+instrucciones o ciclos ha ejecutado el proceso.
+
+ACC:
+Registro acumulador utilizado para representar un dato de trabajo.
+
+PID:
+Identificador numérico del proceso: 1 para P1, 2 para P2, etc.
+
+En cada ciclo se realiza:
+
+    PC = PC + 1
+    ACC = ACC + PID
+
+Por ejemplo, P2 suma 2 a su acumulador en cada ciclo.
+Después de 3 ciclos, su PC vale 3 y su ACC vale 6.
+
+Al retirar un proceso de la CPU, se guardan PC y ACC en su PCB.
+Cuando vuelve a recibir un turno, se restauran esos valores:
+continúa desde donde se quedó.
+
+Los indicadores de la CPU muestran los valores activos.
+La tabla muestra el último contexto guardado.
+
+Por ello, durante la ejecución pueden ser distintos hasta
+que se realice el siguiente guardado.
+
+Cuando la CPU queda libre, sus registros pueden mostrar cero.
+Esto no elimina el contexto que ya quedó guardado en cada proceso.
+
+
+13. CÓMO INFLUYE EL QUANTUM
+
+QUANTUM PEQUEÑO
+Los procesos reciben turnos cortos y se alternan con mayor
+frecuencia. Generalmente produce más cambios entre procesos.
+
+QUANTUM GRANDE
+Cada proceso puede ejecutar más ciclos seguidos.
+Generalmente reduce la frecuencia de alternancia.
+
+Si el quantum es igual o mayor que todas las ráfagas, cada
+proceso termina en su primer turno. En este caso, el orden
+coincide con una atención FIFO: primero en llegar, primero
+en ser atendido.
+
+Cambiar el quantum puede modificar:
+- La distribución de la línea de tiempo.
+- El orden de finalización.
+- Los tiempos de espera y retorno.
+- La cantidad de cambios entre procesos.
+
+Un quantum más pequeño no garantiza una espera media menor.
+El resultado depende de las ráfagas y del orden de los procesos.
+
+En este simulador, el tiempo total de CPU siempre es la suma
+de las ráfagas, porque los cambios de contexto no consumen
+tiempo simulado.
+
+
+14. ESTADÍSTICAS
+
+CICLOS EJECUTADOS
+Cantidad total de ciclos de CPU realizados.
+
+CAMBIOS ENTRE PROCESOS
+Cuenta las transiciones de la CPU de un proceso a otro distinto.
+
+No cuenta:
+- El despacho inicial.
+- El paso final a CPU libre.
+- Volver a despachar el mismo proceso cuando no hay otro listo.
+
+TIEMPO DE RETORNO
+Tiempo desde la llegada de un proceso hasta su finalización.
+
+    Retorno = instante de finalización - instante de llegada
+
+Como todos llegan en t=0, retorno y finalización coinciden.
+
+TIEMPO DE ESPERA
+Tiempo que el proceso permanece esperando la CPU.
+
+Al finalizar:
+
+    Espera = retorno - ráfaga
+
+ESPERA MEDIA
+Suma de las esperas dividida entre el número de procesos.
+
+RETORNO MEDIO
+Suma de los retornos dividida entre el número de procesos.
+
+
+15. EJEMPLO DE COMPROBACIÓN
+
+Ráfagas: 5,3,4
+Quantum: 2
+
+Turnos esperados:
+
+    P1: de 0 a 2
+    P2: de 2 a 4
+    P3: de 4 a 6
+    P1: de 6 a 8
+    P2: de 8 a 9
+    P3: de 9 a 11
+    P1: de 11 a 12
+
+Resultados:
+
+    Proceso   Ráfaga   Finalización/retorno   Espera
+    P1        5        12                     7
+    P2        3         9                     6
+    P3        4        11                     7
+
+    Tiempo total: 12 ciclos.
+    Cambios entre procesos: 6.
+    Espera media: 6.67 ciclos.
+    Retorno medio: 10.67 ciclos.
+
+Contexto final:
+
+    P1: PC = 5, ACC = 5.
+    P2: PC = 3, ACC = 6.
+    P3: PC = 4, ACC = 12.
+
+COMPARACIÓN CON OTRO QUANTUM
+
+Manteniendo las ráfagas 5,3,4 y usando quantum 5:
+
+    P1: de 0 a 5
+    P2: de 5 a 8
+    P3: de 8 a 12
+
+    Tiempo total: 12 ciclos.
+    Cambios entre procesos: 2.
+    Esperas: P1 = 0, P2 = 5, P3 = 8.
+    Espera media: 4.33 ciclos.
+    Retorno medio: 8.33 ciclos.
+
+El tiempo total es el mismo, pero cambian los turnos,
+las esperas y los instantes de finalización.
+
+
+16. ALCANCE DE LA SIMULACIÓN
+
+- Se simula una sola CPU.
+- Todos los procesos llegan en t=0.
+- No se utilizan prioridades.
+- No se simulan operaciones de entrada/salida ni bloqueos.
+- Guardar y restaurar contexto no consume ciclos simulados.
+- Los ciclos son unidades de simulación, no segundos reales.
+- Pausar la interfaz no cambia el estado de los procesos
+  a un supuesto estado BLOQUEADO.
+- No se ejecutan procesos reales del sistema operativo.
