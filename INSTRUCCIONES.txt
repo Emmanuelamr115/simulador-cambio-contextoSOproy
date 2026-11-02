@@ -1,0 +1,79 @@
+SIMULADOR DE CAMBIO DE CONTEXTO EN PYTHON
+
+REQUISITOS
+- Python 3.8 o posterior.
+- Tkinter para abrir la ventana gráfica.
+- No requiere instalar paquetes con pip.
+
+ARCHIVOS
+main.py         Inicia el programa y procesa las opciones de ejecución.
+proceso.py      Define cada proceso y su contexto guardado (PC y ACC).
+planificador.py Administra Round Robin, la CPU, la cola y los cambios de estado.
+gui.py          Contiene la ventana, los controles, la tabla y la línea de tiempo.
+consola.py      Muestra los eventos y resultados en la terminal.
+
+CÓMO EJECUTAR
+1. Extrae el ZIP completo.
+2. Mantén todos los archivos .py juntos dentro de simulador_contexto.
+3. Abre esa carpeta en VS Code: Archivo > Abrir carpeta.
+4. Abre Terminal > Nueva terminal. Debes estar en la carpeta que contiene main.py.
+5. Ejecuta SOLO main.py; este carga automáticamente los demás módulos.
+
+Ubuntu / Linux:
+    python3 main.py
+
+Windows:
+    python main.py
+Si el comando anterior no se reconoce y tienes Python instalado:
+    py main.py
+
+Si Ubuntu indica que falta Tkinter:
+    sudo apt install python3-tk
+Después vuelve a ejecutar:
+    python3 main.py
+
+MODO CONSOLA (no necesita Tkinter ni pantalla gráfica)
+Ubuntu / Linux:
+    python3 main.py --consola
+Windows:
+    python main.py --consola
+
+Para personalizar ráfagas y quantum en consola:
+    python3 main.py --consola --rafagas 5,3,4 --quantum 2
+En Windows sustituye python3 por python o py.
+Las opciones --rafagas y --quantum se aplican al modo consola.
+En modo gráfico, configura estos valores dentro de la ventana.
+
+USO DE LA INTERFAZ
+- Ráfagas: escribe enteros positivos separados por comas (ejemplo: 5,3,4).
+- Quantum: número máximo de ciclos de cada turno; debe ser un entero positivo.
+- Aplicar / Reiniciar: carga la configuración y empieza desde cero.
+- Un paso: realiza un despacho, un ciclo de CPU o un guardado de contexto.
+- Automático: avanza sin pulsar manualmente cada paso.
+- Pausar: detiene el avance automático sin borrar la simulación.
+- Pausa visual (ms): cambia la velocidad de animación, no el quantum.
+- Exportar registro: permite guardar los eventos en un archivo de texto.
+- La interfaz admite hasta 20 procesos y 2000 ciclos en total.
+
+ESTADOS Y CONTEXTO
+Azul: LISTO. Verde: EJECUTANDO. Gris: TERMINADO.
+PC es el contador de programa y ACC es el registro acumulador.
+La CPU muestra los registros activos; la tabla muestra el último contexto
+que se guardó en el PCB del proceso. Al volver su turno, se restaura.
+Cada ciclo ejecuta ACC += PID y aumenta PC en uno.
+Todos los procesos llegan en t=0. No se simula E/S ni costo temporal por
+cambio de contexto. Es una simulación, no ejecuta procesos reales del SO.
+
+EJEMPLO PARA COMPROBAR
+Con ráfagas 5,3,4 y quantum 2:
+- Tiempo total: 12 ciclos.
+- Cambios entre procesos: 6.
+- Fin de P1: 12; fin de P2: 9; fin de P3: 11.
+El contador no incluye el despacho inicial ni volver al mismo proceso.
+
+SOLUCIÓN DE PROBLEMAS
+- "No such file" o "can't open file": abre la terminal en la carpeta de main.py.
+- "No module named planificador/proceso/gui/consola": extrae todos los .py juntos.
+- Error de pantalla/display: ejecuta en una sesión de escritorio o usa --consola.
+- No ejecutes directamente gui.py, proceso.py, planificador.py o consola.py:
+  el punto de entrada es main.py.
